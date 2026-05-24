@@ -21,3 +21,13 @@ print("=== 유방암 진단 분류 개선 모델 ===")
 print(f"테스트 정확도(Accuracy): {accuracy_score(y_test, y_pred):.4f}\n")
 print("=== 상세 평가 지표 ===")
 print(classification_report(y_test, y_pred, target_names=cancer.target_names))
+
+# 5. 모델 분석 (특성 중요도 출력)
+print("=== 주요 암 발병 예측 인자 (Feature Importance Top 3) ===")
+# 모델이 악성/양성 종양을 판별할 때 가장 크게 의존한 세포 특징 상위 3개 도출
+importances = model.feature_importances_
+feature_names = cancer.feature_names
+
+# 중요도를 기준으로 내림차순 정렬하여 상위 3개 출력
+for name, importance in sorted(zip(feature_names, importances), key=lambda x: x[1], reverse=True)[:3]:
+    print(f"{name}: {importance:.4f}")
